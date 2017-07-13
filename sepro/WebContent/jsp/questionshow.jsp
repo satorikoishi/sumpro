@@ -1,6 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-/*show model*/
 <html>
   <head>
 
@@ -60,49 +59,32 @@ font-size:13px;
                             <button type="button" title="Search">创建</button>
                         </div>
                   
-            
             </ul>
         </div>
-
-	   <div class="products_list products_slider clear">
-
-	                <ul id="first-carousel" class="first-and-second-carousel jcarousel-skin-tango">
-		                    <li> <div>
-		                    	<!--  图片部分 <a href="${shop}/product_get.action?id=${product.id}" class="product_image"><img src="${shop}/files/${product.pic}" /></a>  -->
-		                    	  <img src="../picture/questionnaire.png" width="100px" height="140px" />
-		        
-		                        <div class="product_info">
-		                            <small>问卷简介</small> </div>
-		                            
-		                            
-		                       </div>
-		                    </li>
-	                
-	                </ul>
-	     </div>
-         
-     
-
-<HR style="FILTER: progid:DXImageTransform.Microsoft.Shadow(color:#987cb9,direction:145,strength:15)" width="100%" color=#987cb9 SIZE=1> <!-- 分割线 -->
-
-	      
-	              <ul class="primary_nav">
-                <li class="active highlight"><a href="#"><font size="4" color="DarkOrchid">已发布内容</font></a>
-          </ul>
-	      
-	            	
-	                 	  <ul id="first-carousel" class="first-and-second-carousel jcarousel-skin-tango">
-	              
-		                    <li> 
-		                    	<!--  图片部分 <a href="${shop}/product_get.action?id=${product.id}" class="product_image"><img src="${shop}/files/${product.pic}" /></a>  -->
-		                    	  <img src="../picture/questionnaire.png" width="100px" height="140px" />
-		        
-		                        <div class="product_info">
-		                            <small>&nbsp&nbsp&nbsp问卷简介</small> </div>
-		                       
-		                    </li>
-
-	                </ul>
+        <tr>
+         <td><br>
+      		  <div class="box2"> <img src="../picture/pic.png" width="120px" height="120px" />&nbsp &nbsp </div>
+      	   <div class="box1"><font size="4" >问卷简介 </font> </div>
+      	   <br>  <br>
+			<div style="background:#F0FFFF;height:82px" >
+					request().getAttribute
+			 </div>
+			 <br>
+         </td>
+        
+    </tr>
+<tr>
+         <td><br>
+      		  <div class="box2"> <img src="../picture/pic.png" width="120px" height="120px" />&nbsp &nbsp </div>
+      	   <div class="box1"><font size="4" >创建问卷 </font> </div>
+      	   <br>  <br>
+			<div style="background:#F0FFFF;height:82px" >
+					requestUpdate
+			 </div>
+			 <br>
+         </td>
+        
+    </tr>
 
   </body>
 </html>
