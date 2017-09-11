@@ -7,22 +7,80 @@
 <struts>
 	<constant name="struts.i18n.encoding" value="utf-8" />
 	<constant name="struts.devMode" value="true" />
-	<package name="process" extends="struts-default">
+	<constant name="struts.configuration.xml.reload" value="true" />
+	<constant name="struts.convention.classes.reload" value="true" />
+	<package name="process" extends="struts-default,json-default">
 	
 	<!-- login -->
 	<action name="Login" class="action.LoginAction">
-		<result name="success">/succ.jsp</result>
+		<result name="success">/jsp/publishQuestionnaire.jsp</result>
 		<result name="none">/fail.jsp</result>
 	</action>
 	
 	<action name="Register" class="action.RegisterAction">
+		<result name="success">/jsp/mainpage.jsp</result>
+		<result name="none">/fail.jsp</result>
+	</action>
+	
+	<!-- 后端测试 -->
+	<action name="Test" class="action.TestAction">
 		<result name="success">/succ.jsp</result>
 		<result name="none">/fail.jsp</result>
 	</action>
 	
-	<action name="Test" class="action.TestAction">
+	<!-- 保存新创建的问卷内容(不包含更新问卷内容) -->
+	<action name="saveQuestionnaire" class="action.SaveQuesContentAction" method="save">
+		<interceptor-ref name="json"></interceptor-ref>
+	</action>
+	
+	<!-- 保存或更新答案内容 -->
+	<action name="saveAnsQues" class="action.SaveAnsQuesContentAction">
+		<interceptor-ref name="json"></interceptor-ref>
 		<result name="success">/succ.jsp</result>
-		<result name="none">/fail.jsp</result>
+	</action>
+	
+	<!-- 跳转到“个人中心”页面 -->
+	<action name="personalCenter" class="action.PersonalCenterAction">
+		<result name="success">/jsp/personalCenter.jsp</result>
+	</action>
+	
+	<!-- 更新个人信息，并跳转回“个人中心”页面 -->
+	<action name="updateUserInfo" class="action.UpdateUserInfoAction">
+		<result name="success" type="redirectAction">personalCenter</result>
+	</action>
+	
+	<!-- publishQuestionnaire:跳转到“发布问卷”页面 -->
+	<action name="publishQuestionnaire" class="action.GetQuesListCreatedAction">
+		<result name="success">/jsp/publishQuestionnaire.jsp</result>
+	</action>
+	
+	<!-- getQuesContent:获取问卷内容，跳转到查看问卷内容的页面 -->
+	<action name="getQuesContent" class="action.GetQuesContentAction">
+		<result name="success">/jsp/showQuesContent.jsp</result>
+	</action>
+	
+	<!-- 填写问卷 -->
+	<action name="fillQuestionnaire" class="action.GetQuesContentAction">
+		<result name="success">/jsp/answerQuestionnaire.jsp</result>
+	</action>
+	
+	<!-- 修改回答 -->
+	<action name="editAnswer" class="action.GetAnsQuesContentAction">
+		<result name="success">/jsp/preview.jsp</result>
+	</action>
+	
+	<!-- questionnaireSquare：跳转到问卷广场 -->
+	<action name="questionnaireSquare" class="action.GetQuesListPublishedAction">
+		<result name="success">/jsp/questionnaireSquare.jsp</result>
+	</action>
+	
+	<!-- publishQuesAction：发布问卷(保存set_date和end_date) -->
+	<action name="publishQuesAction" class="action.PublishQuestionnaireAction" method="publish">
+	</action>
+	
+	
+	<action name="publishPreview" class="action.GetQuesContentAction">
+		<result name="success">/jsp/issue_preview.jsp</result>
 	</action>
 	
 	</package>

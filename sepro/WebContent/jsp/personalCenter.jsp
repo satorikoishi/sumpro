@@ -1,25 +1,29 @@
+<!-- 个人中心页面 -->
 <%@ page import="model.user" %>
 <%@ page import="model.questionnaire" %>
 <%@ page import="model.answer_questionnaire" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
 <head>
+
+	<%
+		String path = request.getContextPath();
+	%>
 	<link href="stylesheet" href="icono.min.css">
-	<link href="css/personalCenter.css" rel="stylesheet">
-	<link href="css/font-awesome.min.css" rel="stylesheet">
+	<link href="<%=path %>/css/personalCenter.css" rel="stylesheet">
+	<link href="<%=path %>/css/font-awesome.min.css" rel="stylesheet">
 	
-	<script src="js/jquery.min.js"></script>
-	<script src="js/personalCenter.js"></script>
+	<script src="<%=path %>/js/jquery.min.js"></script>
+	<script src="<%=path %>/js/personalCenter.js"></script>
 	
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	
-	<title>个人中心</title>
+	<title>问卷网-个人中心</title>
 </head>
 
 <body>
@@ -43,21 +47,21 @@
 	<!-- 标题栏 -->
 	<div class="header">
 		<div class="header-logo">
-			<img src="picture/logo.png" alt="logo">
+			<img src="<%=path %>/picture/logo.png" alt="logo">
 		</div>
 		<div class="header-menu">
 			<span class="header-menu-span">
-				<a href="#">问卷发布</a>
+				<a href="publishQuestionnaire.action?userId=<%=user.getId()%>">发布问卷</a>
 			</span>
 			<span class="header-menu-span">
 				<a href="#">问卷模板</a>
 			</span>
 			<span class="header-menu-span">
-				<a href="#">问卷广场</a>
+				<a href="questionnaireSquare.action">问卷广场</a>
 			</span>
 			<!-- 当前页面将其header-menu-span置换为current -->
 			<span class="header-menu-span-current">
-				<a href="#">个人中心</a>
+				<a href="personalCenter.action">个人中心</a>
 			</span>
 		</div>
 		<div class="header-username">
@@ -100,7 +104,7 @@
 				</div>
 				<div class="area-body-img-container">
 					<div class="area-body-img-box">
-						<img class="area-body-img" src="picture/user.jpg">
+						<img class="area-body-img" src="<%=path %>/picture/user.jpg">
 						<div class="area-body-img-button">[ 更换头像 ]</div>
 					</div>
 				</div>
@@ -114,15 +118,27 @@
 				<span class="area-header-title">我创建的问卷</span>
 				<span class="area-header-edit">[ 查看更多 ]</span>
 			</div>
+			<!-- 隐藏表单，用于向展示问卷内容页面的跳转 -->
+			<form action="getQuesContent" method="post" id="get-questionnaire">
+			<input name="questionnaireId" value="" style="display:none">
 			<div class="area-body"><div style="min-height:320px;">
 				<%
 					questionnaire ques = null;
 					for(int i = 0; i < quesListCreated.size(); i++){
 						ques = quesListCreated.get(i);
 				%>
-				<div class="questionnaire-box questionnaire" data-quesid="<%=ques.getId()%>">
+				<div class="questionnaire-box questionnaire-created" data-quesid="<%=ques.getId()%>">
 					<div class="questionnaire-title">
 						<%=ques.getTitle() %>
+					</div>
+					<div class="questionnaire-date">
+						<span>
+						<%if(ques.getSet_date() == null){%>
+							问卷状态：未发布
+						<%}else{ %>
+							问卷状态：已发布
+						<%} %>
+						</span>
 					</div>
 					<div class="questionnaire-date">
 						<span>创建日期：</span>
@@ -141,6 +157,7 @@
 					}
 				%>
 			</div></div>
+			</form>
 		</div>
 		
 		<!-- 我填写的问卷 -->
@@ -149,6 +166,10 @@
 				<span class="area-header-title">我填写的问卷</span>
 				<span class="area-header-edit">[ 查看更多 ]</span>
 			</div>
+			<!-- 隐藏表单，用于向展示问卷内容页面的跳转 -->
+			<form action="editAnswer" method="post" id="fill-questionnaire">
+			<input name="userId" value="<%=user.getId() %>" style="display:none">
+			<input name="questionnaireId" value="" style="display:none">
 			<div class="area-body"><div style="min-height:320px;">
 				<%
 					for(answer_questionnaire ansQues : quesListFilled){
@@ -159,6 +180,15 @@
 						data-userid="<%=ansQues.getU_id() %>" >
 					<div class="questionnaire-title">
 						<%=ques.getTitle() %>
+					</div>
+					<div class="questionnaire-date">
+						<span>
+						<%if(ansQues.getIf_complete() == 0){%>
+							回答状态：未提交
+						<%}else{ %>
+							回答状态：已提交
+						<%} %>
+						</span>
 					</div>
 					<div class="questionnaire-date">
 						<span>创建日期：</span>
@@ -177,6 +207,7 @@
 					}
 				%>	
 			</div></div>
+			</form>
 		</div>
 	</div>
 </body>
